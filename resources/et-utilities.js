@@ -14,13 +14,15 @@ window.utilities = (function () {
             [5, 95], [30, 95], [50, 95], [70, 95], [95, 95]],   // 15 point calibration
         calibration_mode: 'click',          // Click-by-click calibration
         clicks_per_point: 2,                // Have the user click on the calibration target 2 times before moving on to the next
-        repetitions_per_point: 1,           // Repeat the calibration points just once
-        randomize_calibration_order: false, // Do not randomize
         time_to_saccade: 1000,              // For 'view' mode calibration, assume it'll take 1 second for the target to saccade to the calibration point
         time_per_point: 1000,               // For 'view' mode calibration, have the subject fixate at the target for 1 second
+        repetitions_per_point: 1,           // Repeat the calibration points just once
+        randomize_calibration_order: false, // Do not randomize
 
         /* Calibration validation*/
-        minimum_calibration_precision: 60,   // Minimum calibration precision is 50
+        validation_duration: 5000,          // Show the validation point for 5 seconds
+        minimum_calibration_precision: 60,  // Minimum calibration precision is 60
+        maximum_tries: 3,                   // End experiment if calibration fails for 3 times
 
         /* Recalibration flow */
         recalibrate_after_n_seconds: 5 * 60,  // Recalibrate after 5 minutes
@@ -90,12 +92,13 @@ window.utilities = (function () {
     let getValidationTrial = function (options) {
         return {
             type: 'webgazer-validate-single-point',
+            validation_duration: getOption(options, 'validation_duration'),
             minimum_calibration_precision: getOption(options, 'minimum_calibration_precision'),
+            maximum_tries: getOption(options, 'maximum_tries'),
         }
     }
 
     let getExperimentTrial = function (trial_data, options) {
-        // TODO Use options
         return {
             type: "eye-tracking",
             trial_data: trial_data,

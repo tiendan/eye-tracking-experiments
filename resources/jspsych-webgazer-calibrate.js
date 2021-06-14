@@ -23,14 +23,6 @@ jsPsych.plugins["webgazer-calibrate"] = (function () {
                 type: jsPsych.plugins.parameterType.INT,
                 default: 2
             },
-            repetitions_per_point: {
-                type: jsPsych.plugins.parameterType.INT,
-                default: 5
-            },
-            randomize_calibration_order: {
-                type: jsPsych.plugins.parameterType.BOOL,
-                default: false
-            },
             time_to_saccade: {
                 type: jsPsych.plugins.parameterType.INT,
                 default: 1000
@@ -38,6 +30,14 @@ jsPsych.plugins["webgazer-calibrate"] = (function () {
             time_per_point: {
                 type: jsPsych.plugins.parameterType.STRING,
                 default: 1000
+            },
+            repetitions_per_point: {
+                type: jsPsych.plugins.parameterType.INT,
+                default: 5
+            },
+            randomize_calibration_order: {
+                type: jsPsych.plugins.parameterType.BOOL,
+                default: false
             },
             // Custom options for the calibration function
             skip_if_calibrated: {
