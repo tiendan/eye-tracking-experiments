@@ -27,11 +27,12 @@ gorilla.ready(function() {
         //     [5, 50], [30, 50], [50, 50], [70, 50], [95, 50],
         //     [5, 95], [30, 95], [50, 95], [70, 95], [95, 95]],   // 15 point calibration
         // calibration_mode: 'click',          // Click-by-click calibration
-        // clicks_per_point: 2,                // Have the user click on the calibration target 2 times before moving on to the next
+        // clicks_per_point: 5,                // Have the user click on the calibration target 2 times before moving on to the next
         // time_to_saccade: 1000,              // For 'view' mode calibration, assume it'll take 1 second for the target to saccade to the calibration point
         // time_per_point: 1000,               // For 'view' mode calibration, have the subject fixate at the target for 1 second
         // repetitions_per_point: 1,           // Repeat the calibration points just once
         // randomize_calibration_order: false, // Do not randomize
+        // custom_calibration_target: null,    // Do not use custom calibration target
         //
         // /* Calibration validation*/
         // validation_duration: 5000,          // Show the validation point for 5 seconds
@@ -65,29 +66,17 @@ gorilla.ready(function() {
     let imageFiles = experimentDetails[2];
     let audioFiles = experimentDetails[3];
 
-    var soundCheck = gorilla.stimuliURL("sound_check.mp3");
-    audioFiles.push(soundCheck);
-
+    let timeline = [];
     // Check browser compatibility
     timeline.push({
         type: "browser-check",
-        test_audio: soundCheck,
+        test_audio: gorilla.stimuliURL("sound_check.mp3"),
     });
 
     // Enter fullscreen mode
     timeline.push({
         type: 'fullscreen',
-        fullscreen_mode: true
-    });
-
-    // Post-calibration message
-    timeline.push({
-        type: "html-button-response",
-        stimulus: "<p>\
-        Calibration completed successfully. Please keep still during the experiment.\
-        </p>\
-         Click CONTINUE to continue to the experiment.",
-        choices: ["CONTINUE"],
+        fullscreen_mode: true,
     });
 
     // Pre-practice message

@@ -4,6 +4,7 @@
   "continue_button_label": "Continue",
   "yes_button_label": "Yes",
   "no_button_label": "No",
+  "fullscreen_text": "<p>The experiment will switch to full screen mode when you press the button below</p>",
   "calibration_lost_dialog_title": "Calibration Lost",
   "calibration_lost_dialog_text": "We lost your face in the webcam video stream. Please sit in front of the monitor, and make sure your face is centered in the webcam video stream. The experiment will continue with a new calibration.",
   "sound_check_dialog_title": "Sound Check",

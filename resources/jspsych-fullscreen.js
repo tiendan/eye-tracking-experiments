@@ -20,13 +20,6 @@ jsPsych.plugins.fullscreen = (function() {
         array: false,
         description: 'If true, experiment will enter fullscreen mode. If false, the browser will exit fullscreen mode.'
       },
-      message: {
-        type: jsPsych.plugins.parameterType.STRING,
-        pretty_name: 'Message',
-        default: '<p>The experiment will switch to full screen mode when you press the button below</p>',
-        array: false,
-        description: 'HTML content to display above the button to enter fullscreen mode.'
-      },
       button_label: {
         type: jsPsych.plugins.parameterType.STRING,
         pretty_name: 'Button label',
@@ -54,7 +47,7 @@ jsPsych.plugins.fullscreen = (function() {
       endTrial();
     } else {
       if(trial.fullscreen_mode){
-        display_element.innerHTML = trial.message + '<button id="jspsych-fullscreen-btn" class="jspsych-btn">'+trial.button_label+'</button>';
+        display_element.innerHTML = _("fullscreen_text") + '<button id="jspsych-fullscreen-btn" class="jspsych-btn">'+trial.button_label+'</button>';
         var listener = display_element.querySelector('#jspsych-fullscreen-btn').addEventListener('click', function() {
           var element = document.documentElement;
           if (element.requestFullscreen) {

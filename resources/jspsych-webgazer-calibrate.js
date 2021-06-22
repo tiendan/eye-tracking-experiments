@@ -21,7 +21,7 @@ jsPsych.plugins["webgazer-calibrate"] = (function () {
             },
             clicks_per_point: {
                 type: jsPsych.plugins.parameterType.INT,
-                default: 2
+                default: 5
             },
             time_to_saccade: {
                 type: jsPsych.plugins.parameterType.INT,
@@ -38,6 +38,10 @@ jsPsych.plugins["webgazer-calibrate"] = (function () {
             randomize_calibration_order: {
                 type: jsPsych.plugins.parameterType.BOOL,
                 default: false
+            },
+            custom_calibration_target: {
+                type: jsPsych.plugins.parameterType.IMAGE,
+                default: null
             },
             // Custom options for the calibration function
             skip_if_calibrated: {
@@ -138,7 +142,11 @@ jsPsych.plugins["webgazer-calibrate"] = (function () {
         }
 
         function calibration_display_gaze_only(pt) {
-            var pt_html = `<div id="calibration-point" style="left:${pt[0]}%; top:${pt[1]}%; opacity: 50%"></div>`
+            var additional_style = ""
+            if(trial.custom_calibration_target !== null) {
+                additional_style = `background-image: url('${trial.custom_calibration_target}'); border: none;`
+            }
+            var pt_html = `<div id="calibration-point" style="left:${pt[0]}%; top:${pt[1]}%; opacity: 50%; ${additional_style}"></div>`
             wg_container.innerHTML = pt_html;
 
             var pt_dom = wg_container.querySelector('#calibration-point');

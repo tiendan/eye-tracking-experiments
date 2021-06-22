@@ -13,11 +13,12 @@ window.utilities = (function () {
             [5, 50], [30, 50], [50, 50], [70, 50], [95, 50],
             [5, 95], [30, 95], [50, 95], [70, 95], [95, 95]],   // 15 point calibration
         calibration_mode: 'click',          // Click-by-click calibration
-        clicks_per_point: 2,                // Have the user click on the calibration target 2 times before moving on to the next
+        clicks_per_point: 5,                // Have the user click on the calibration target 2 times before moving on to the next
         time_to_saccade: 1000,              // For 'view' mode calibration, assume it'll take 1 second for the target to saccade to the calibration point
         time_per_point: 1000,               // For 'view' mode calibration, have the subject fixate at the target for 1 second
         repetitions_per_point: 1,           // Repeat the calibration points just once
         randomize_calibration_order: false, // Do not randomize
+        custom_calibration_target: null,    // Do not use custom image
 
         /* Calibration validation*/
         validation_duration: 5000,          // Show the validation point for 5 seconds
@@ -68,6 +69,10 @@ window.utilities = (function () {
     }
 
     let getCalibrationTrial = function (options) {
+        let calibration_target = getOption(options, 'custom_calibration_target');
+        if(calibration_target !== null) {
+            calibration_target = module.getStimuliURL(calibration_target);
+        }
         return {
             type: 'webgazer-calibrate',
             calibration_points: getOption(options, 'calibration_points'),
@@ -75,6 +80,7 @@ window.utilities = (function () {
             clicks_per_point: getOption(options, 'clicks_per_point'),
             repetitions_per_point: getOption(options, 'repetitions_per_point'),
             randomize_calibration_order: getOption(options, 'randomize_calibration_order'),
+            custom_calibration_target: calibration_target,
             time_to_saccade: getOption(options, 'time_to_saccade'),
             time_per_point: getOption(options, 'time_per_point'),
         }

@@ -34,29 +34,10 @@
   // Load translations from JSON file
   _.loadTranslations('translations.json');
 
-  let trials = utilities.loadData('data_2_images.csv')
-
-  // Shuffle the non-practice trials according to two fields
-  utilities.shuffle(trials, ["counterbalance", "block"])
+  let trials = utilities.loadData('data.csv')
 
   // Some custom experiment options
   let experimentOptions = {
-      calibration_mode: 'click',
-      recalibrate_after_n_seconds: 45,
-      recalibrate_after_n_trials: 3,
-      calibration_points: [[10, 10], [10, 50], [10, 90], [50, 10], [50, 50], [50, 90], [90, 10], [90, 50], [90, 90]],
-      repetitions_per_point: 2,
-      randomize_calibration_order: true,
-      minimum_calibration_precision: 30,
-
-      response_keys: ['F', 'J'],  // Accept key presses as input
-      center_gaze_after_trial: false,
-      single_response: false,
-      response_ends_trial: false,
-      trial_ends_after_audio: true,
-      response_allowed_while_playing: true,
-      pictures_delay: 1000,
-      audio_delay: 2000,
   }
   let experimentDetails = utilities.prepareExperiment(trials, [], experimentOptions);
   let experimentTimeline = experimentDetails[0];
@@ -64,13 +45,11 @@
   let audioFiles = experimentDetails[3];
 
   let timeline = [];
+
   timeline.push({
     type: 'html-button-response',
     stimulus: `
-      <p>This experiment uses your camera for eye tracking.</p>
-      <p>In order to participate you must allow the experiment to use your camera.</p>
-      <p>You will be prompted to do this on the next screen.</p>
-      <p>If you do not want to permit the experiment to use your camera, please close the page.</p>
+      <p>Some instructions here.</p>
     `,
     choices: ['Click to begin'],
   });

@@ -14,7 +14,7 @@ This repository contains the source code for modules used in eye-tracking experi
     - `picture1`, ... `pictureN`: Pictures to be shown in the trial. For example, if you want to show 3 pictures in your experiment, include `picture1`, `picture2` and `picture3`     columns
     - `audio`: Audio to be played during the trial.
 - If you want to include any extra information, add them to new columns. These will be directly exported as Gorilla metrics during the experiments.
-- If you want to specify practice trials before the actual experiment, create a similar file with only the 
+- If you want to specify practice trials before the actual experiment, create a similar data file with only the practice trials
 - Upload your data files to the "Uploads > Stimuli" section of your task
 - Define your metrics under "Experiment > Metrics" section of your task. The metrics available for the eye-tracking experiments are:
     - All the columns from your data files
@@ -40,6 +40,7 @@ For customizing your experiment, these are the most obvious and easy ways:
     - `time_per_point`: For `view` mode, decides how long the calibration point will be displayed after the initial time to saccade. For example, if `time_to_saccade` is set to 1000ms and `time_per_point` to 2000ms, the calibration point will be displayed for a total of 3 seconds and the first second will be ignored by the calibration.
     - `repetitions_per_point`: For both calibration modes, how many times to repeat the entire set of calibration points.
     - `randomize_calibration_order`: Whether the calibration point order should be randomized or not.
+    - `custom_calibration_target`: If you want to use a custom calibration target (i.e. a 'duck' image), the name of the image file (i.e. `duck.jpg`) in your stimuli directory. This image should be of 30x30 size. 
     - `validation_duration`: How long (in ms) to show the validation point after a calibration.
     - `minimum_calibration_precision`: The minimum validation precision for a calibration to be considered successful.
     - `maximum_tries`: How many times the subject can retry the calibration, if the precision is below the minimum during validation.
