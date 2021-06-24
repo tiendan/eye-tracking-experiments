@@ -25,6 +25,10 @@ jsPsych.plugins['eye-tracking'] = (function () {
                 default: null,
                 description: 'Custom HTML for experiment design.'
             },
+            custom_calibration_target: {
+                type: jsPsych.plugins.parameterType.IMAGE,
+                default: null
+            },
             /* OPTIONS FOR INPUTS */
             response_css_selector: {
                 type: jsPsych.plugins.parameterType.STRING,
@@ -434,8 +438,12 @@ jsPsych.plugins['eye-tracking'] = (function () {
         // Replace the display element contents with a centered calibration point, so that the subject's gaze
         // is centered after the trial
         function showCenterDot() {
+            var additional_style = ""
+            if(trial.custom_calibration_target !== null) {
+                additional_style = `background-image: url('${trial.custom_calibration_target}') repeat center; border: none;`
+            }
             // Update the display element
-            display_element.innerHTML = `<div id="calibration-point" style="background-color: yellow; left:50%; top:50%;"></div>`;
+            display_element.innerHTML = `<div id="validation-point" style="left:50%; top:50%; ${additional_style}"></div>`;
 
             // When the calibration point is clicked, end the trial
             $("#calibration-point").click(endTrial);

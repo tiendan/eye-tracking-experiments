@@ -31,6 +31,10 @@ jsPsych.plugins["webgazer-validate-single-point"] = (function () {
                 default: 3,
                 description: 'The maximum number of times the calibration can be repeated. If the subject still cannot achieve the required calibration, the experiment will be terminated.'
             },
+            custom_calibration_target: {
+                type: jsPsych.plugins.parameterType.IMAGE,
+                default: null
+            },
         }
     }
 
@@ -129,7 +133,11 @@ jsPsych.plugins["webgazer-validate-single-point"] = (function () {
         }
 
         function drawValidationPoint() {
-            return `<div id="validation-point" style="left:50%; top:50%;"></div>`
+            var additional_style = ""
+            if(trial.custom_calibration_target !== null) {
+                additional_style = `background-image: url('${trial.custom_calibration_target}') repeat center; border: none;`
+            }
+            return `<div id="validation-point" style="left:50%; top:50%; ${additional_style}"></div>`
         }
 
         function calculatePrecision() {

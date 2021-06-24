@@ -48,16 +48,17 @@
 /* Calibration point styles */
 #calibration-point {
     /* If you want to change the point size change in all the settings below */
-    width: 30px;
-    height: 30px;
-    -webkit-border-radius: 30px;
-    -moz-border-radius: 30px;
-    border-radius:30px;
-    margin-left: -15px;
-    margin-top: -15px;
+    width: 5vh;
+    height: 5vh;
+    -webkit-border-radius: 5vh;
+    -moz-border-radius: 5vh;
+    border-radius: 5vh;
+    margin-left: -2.5vh;
+    margin-top: -2.5vh;
     /* Up to here */
     border: 1px solid #000;
     background-color: red;
+    background-size: cover;
     position: absolute;
     z-index: 999;
     outline: none;
@@ -66,16 +67,17 @@
 
 #validation-point {
     /* If you want to change the point size change in all the settings below */
-    width: 30px;
-    height: 30px;
-    -webkit-border-radius: 30px;
-    -moz-border-radius: 30px;
-    border-radius:30px;
-    margin-left: -15px;
-    margin-top: -15px;
+    width: 5vh;
+    height: 5vh;
+    -webkit-border-radius: 5vh;
+    -moz-border-radius: 5vh;
+    border-radius: 5vh;
+    margin-left: -2.5vh;
+    margin-top: -2.5vh;
     /* Up to here */
     border: 1px solid #000;
     background-color: yellow;
+    background-size: cover;
     position: absolute;
     z-index: 999;
     outline: none;

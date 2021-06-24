@@ -96,19 +96,29 @@ window.utilities = (function () {
     }
 
     let getValidationTrial = function (options) {
+        let calibration_target = getOption(options, 'custom_calibration_target');
+        if(calibration_target !== null) {
+            calibration_target = module.getStimuliURL(calibration_target);
+        }
         return {
             type: 'webgazer-validate-single-point',
             validation_duration: getOption(options, 'validation_duration'),
             minimum_calibration_precision: getOption(options, 'minimum_calibration_precision'),
             maximum_tries: getOption(options, 'maximum_tries'),
+            custom_calibration_target: calibration_target,
         }
     }
 
     let getExperimentTrial = function (trial_data, options) {
+        let calibration_target = getOption(options, 'custom_calibration_target');
+        if(calibration_target !== null) {
+            calibration_target = module.getStimuliURL(calibration_target);
+        }
         return {
             type: "eye-tracking",
             trial_data: trial_data,
             custom_html:            getOption(options, 'custom_html'),
+            custom_calibration_target: calibration_target,
             response_css_selector:  getOption(options, 'response_css_selector'),
             response_keys:          getOption(options, 'response_keys'),
             center_gaze_after_trial:    getOption(options, 'center_gaze_after_trial'),
