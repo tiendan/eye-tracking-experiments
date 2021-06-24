@@ -104,7 +104,7 @@ gorilla.ready(function() {
 
     /* start the experiment */
     jsPsych.init({
-        display_element: $('#gorilla')[0],
+        display_element: typeof gorilla != 'undefined' ? $('#gorilla')[0] : undefined,
         timeline: timeline,
         extensions: [
           {type: 'webgazer'}
@@ -113,7 +113,9 @@ gorilla.ready(function() {
         preload_audio: audioFiles,
         show_preload_progress_bar: true,
         on_data_update: function(data) {
-            gorilla.metric(data);
+            if (typeof gorilla != 'undefined') {
+                gorilla.metric(data);
+            }
         },
         on_finish: function() {
             Swal.fire({
@@ -126,7 +128,9 @@ gorilla.ready(function() {
             }).then((result) => {
                 ;
             });
-            gorilla.finish();
+            if (typeof gorilla != 'undefined') {
+                gorilla.finish();
+            }
         }
     });
 })
