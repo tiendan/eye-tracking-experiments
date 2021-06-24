@@ -162,6 +162,30 @@ jsPsych.plugins['eye-tracking'] = (function () {
                     </div>
                 </div>`;
             }
+            // Four-picture design (custom design)
+            else if (numPictures === 4) {
+                html = `
+                <div class="container-fluid" style="height: 100%;border: solid #FFF;border-width: 4vh 0.5vw 4vh 0.5vw;">
+                    <div class="row" style="height: 48%;">
+                        <div class="col-md-4" style="height: 100%">
+                            <img id="picture1" src="{{PICTURE1}}" class="img-fluid response" data-response="picture1" style="display: none;height: 100%;">
+                        </div>
+                        <div class="col-md-4 offset-md-4" style="height: 100%">
+                            <img id="picture2" src="{{PICTURE2}}" class="img-fluid response" data-response="picture2" style="display: none;height: 100%;">
+                        </div>
+                    </div>
+                    <div class="separator-row" style="height: 6%;">
+                    </div>
+                    <div class="row" style="height: 48%;">
+                        <div class="col-md-4" style="height: 100%">
+                            <img id="picture3" src="{{PICTURE3}}" class="img-fluid response" data-response="picture3" style="display: none;height: 100%;">
+                        </div>
+                        <div class="col-md-4 offset-md-4" style="height: 100%">
+                            <img id="picture4" src="{{PICTURE4}}" class="img-fluid response" data-response="picture4" style="display: none;height: 100%;">
+                        </div>
+                    </div>
+                </div>`;
+            }
         }
 
         // Replace templates (i.e. {{PICTURE1}}) with actual values coming from the trial
