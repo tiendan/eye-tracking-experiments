@@ -146,7 +146,7 @@ window.utilities = (function () {
         // Split data into lines
         let lines = data.split(/\r\n|\n/);
         // Get data headings
-        let headings = lines[0].split(',');
+        let headings = lines[0].toLowerCase().split(',');
 
         for (let i = 1; i < lines.length; i++) {
             let linePieces = lines[i].toLowerCase().split(',');
