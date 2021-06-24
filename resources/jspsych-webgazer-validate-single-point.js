@@ -175,7 +175,7 @@ jsPsych.plugins["webgazer-validate-single-point"] = (function () {
         function validation_done() {
             let precision = calculatePrecision();
             console.log("Precision was: " + precision);
-            end_trial( trial.minimum_calibration_precision);
+            end_trial(precision);
         }
 
         // function to end trial when it is time

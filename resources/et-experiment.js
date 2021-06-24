@@ -443,10 +443,10 @@ jsPsych.plugins['eye-tracking'] = (function () {
                 additional_style = `background-image: url('${trial.custom_calibration_target}') repeat center; border: none;`
             }
             // Update the display element
-            display_element.innerHTML = `<div id="validation-point" style="left:50%; top:50%; ${additional_style}"></div>`;
+            display_element.innerHTML = `<div id="calibration-point" style="background-color: yellow; left:50%; top:50%; ${additional_style}"></div>`;
 
             // When the calibration point is clicked, end the trial
-            $("#validation-point").click(endTrial);
+            $("#calibration-point").click(endTrial);
         }
 
         function clearEvents() {
