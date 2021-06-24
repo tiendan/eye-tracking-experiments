@@ -446,7 +446,7 @@ jsPsych.plugins['eye-tracking'] = (function () {
             display_element.innerHTML = `<div id="validation-point" style="left:50%; top:50%; ${additional_style}"></div>`;
 
             // When the calibration point is clicked, end the trial
-            $("#calibration-point").click(endTrial);
+            $("#validation-point").click(endTrial);
         }
 
         function clearEvents() {
