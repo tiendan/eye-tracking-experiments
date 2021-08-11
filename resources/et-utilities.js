@@ -303,7 +303,7 @@ window.utilities = (function () {
         let allTrials = practiceTrials.concat(trials);
         for (let i = 0; i < allTrials.length; i++) {
             for (let field in pictureFields) {
-                imageFiles.add(allTrials[i][field]);
+                imageFiles.add(allTrials[i][pictureFields[field]]);
             }
             audioFiles.add(allTrials[i]['audio']);
         }
