@@ -8,7 +8,7 @@
   "calibration_lost_dialog_title": "Calibration Lost",
   "calibration_lost_dialog_text": "We lost your face in the webcam video stream. Please sit in front of the monitor, and make sure your face is centered in the webcam video stream. The experiment will continue with a new calibration.",
   "sound_check_dialog_title": "Sound Check",
-  "sound_check_dialog_text": "Can you hear the sound that's being played? You may need to unmute the current tab in your browser, and turn on the volume on your computer.",
+  "sound_check_dialog_text": "Can you hear the sound that's being played? You may need to unmute the current tab in your browser, and turn on the volume on your computer.<br/><br/>Est-ce que vous entendez le son qui est en train de passer? Vous devrez peut-être décocher l'icône muet de l'onglet actif de votre moteur de recherche, et augmenter le volume sur votre ordinateur.<br/><br/>¿Puedes oír el sonido? Si no,asegúrate de que no tienes silenciado tu navegador o que el volumen de tu ordenador no sea demasiado bajo.<br/><br/>.آیا این صدا را میشنوید؟ ممکن است لازم باشد که صدای براوزر خود را وصل کنید یا صدای کامپیوترتان را زیاد کنید",
   "webcam_check_dialog_title": "Webcam Check",
   "webcam_check_dialog_text": "We are trying to detect your webcam. You may need to give permission from web browser when prompted.",
   "browser_incompatible_dialog_title": "Incompatible Browser",

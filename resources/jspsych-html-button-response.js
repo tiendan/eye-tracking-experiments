@@ -32,7 +32,7 @@ jsPsych.plugins["html-button-response"] = (function() {
       button_html: {
         type: jsPsych.plugins.parameterType.STRING,
         pretty_name: 'Button HTML',
-        default: '<button class="jspsych-btn">%choice%</button>',
+        default: '<button class="jspsych-btn" disabled>%choice%</button>',
         array: true,
         description: 'The html of the button. Can create own style.'
       },
@@ -87,7 +87,7 @@ jsPsych.plugins["html-button-response"] = (function() {
             return;
     }
     // display stimulus
-    var html = '<div id="jspsych-html-button-response-stimulus"><div class="container">'+trial.stimulus+'</div></div>';
+    var html = '<div id="jspsych-html-button-response-stimulus"><div class="container">'+trial.stimulus;
 
     //display buttons
     var buttons = [];
@@ -102,18 +102,17 @@ jsPsych.plugins["html-button-response"] = (function() {
         buttons.push(trial.button_html);
       }
     }
-    html += '<div id="jspsych-html-button-response-btngroup">';
     for (var i = 0; i < trial.choices.length; i++) {
       var str = buttons[i].replace(/%choice%/g, trial.choices[i]);
       html += '<div class="jspsych-html-button-response-button" style="display: inline-block; margin:'+trial.margin_vertical+' '+trial.margin_horizontal+'" id="jspsych-html-button-response-button-' + i +'" data-choice="'+i+'">'+str+'</div>';
     }
-    html += '</div>';
+    html += '</div></div>';
 
     //show prompt if there is one
     if (trial.prompt !== null) {
       html += trial.prompt;
     }
-    display_element.innerHTML = html;
+    utilities.setInnerHTML(display_element, html); 
 
     // start time
     var start_time = performance.now();
@@ -121,8 +120,10 @@ jsPsych.plugins["html-button-response"] = (function() {
     // add event listeners to buttons
     for (var i = 0; i < trial.choices.length; i++) {
       display_element.querySelector('#jspsych-html-button-response-button-' + i).addEventListener('click', function(e){
-        var choice = e.currentTarget.getAttribute('data-choice'); // don't use dataset for jsdom compatibility
-        after_response(choice);
+        if(!e.currentTarget.children[0].disabled) {
+          var choice = e.currentTarget.getAttribute('data-choice'); // don't use dataset for jsdom compatibility
+          after_response(choice);
+        }
       });
     }
 

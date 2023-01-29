@@ -29,6 +29,10 @@
     padding: 8px 30px 8px 30px;
 }
 
+.jspsych-html-button-response-button[data-choice='0'] > button:disabled {
+    background-color: #dddddd;
+}
+
 /* Styles for other jsPsych plugins */
 #jspsych-html-button-response-stimulus {
     min-height: 50%;
@@ -81,4 +85,51 @@
     position: absolute;
     z-index: 999;
     outline: none;
+}
+
+/* Instruction styles */
+.call-to-action {
+    background: #28a745;
+    font-size: larger;
+    font-weight: bold;
+    padding: 8px 30px 8px 30px;
+}
+
+.call-to-action:hover {
+    background: #69c77e;
+}
+
+.call-to-action:disabled {
+    background-color: #dddddd;
+}
+
+.instructions-button {
+    background: #284ca7;
+    font-size: larger;
+    font-weight: bold;
+    padding: 8px 30px 8px 30px;
+}
+
+.instructions-button:hover {
+    background: #2863a7;
+}
+
+.instructions-container{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color:#0C9;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+
+.instructions{
+	margin-top: 15px;
+    height: 30px;
+    width: 38px;
+    cursor: pointer;
 }

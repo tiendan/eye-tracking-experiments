@@ -104,6 +104,8 @@ jsPsych.plugins['eye-tracking'] = (function () {
         let pictureBboxData = {};
         let startTime = null;
         let keyboardListener = null;
+        let picturesShownTime = null;
+        let audioStartTime = null;
 
         // If the calibration was lost before this trial, finish the trial immediately
         // so that the looped calibration trial is executed
@@ -197,7 +199,7 @@ jsPsych.plugins['eye-tracking'] = (function () {
             let field = `picture${i}`
             html = html.replaceAll("{{" + field.toUpperCase() + "}}", trial.trial_data[field]);
         }
-        display_element.innerHTML = html;
+        utilities.setInnerHTML(display_element, html)
 
         // start time
         initializeTrial();
@@ -290,11 +292,14 @@ jsPsych.plugins['eye-tracking'] = (function () {
         // Show the images (which are hidden initially)
         function showImages() {
             $(".img-fluid").show();
+            picturesShownTime = utilities.round((performance.now() / 1000) - startTime, 3);
         }
 
         // Start playing the audio, and attach its 'ended' event listener so that we can tell
         // when the audio has finished playing
         function playAudio() {
+            audioStartTime = utilities.round((performance.now() / 1000) - startTime, 3);
+
             // Attach event listener
             audio.addEventListener('ended', onAudioEnded);
 
@@ -375,14 +380,18 @@ jsPsych.plugins['eye-tracking'] = (function () {
 
             // Show a popup message and wait for the "OK" button click
             Swal.fire({
-                title: _("calibration_lost_dialog_title"),
-                html: _("calibration_lost_dialog_text"),
+                html: audio_instructions.instructions_button('calibration_lost_dialog_text.mp3', true, "button.swal2-confirm", true),
                 width: 600,
+                onOpen: () => {
+                    audio_instructions.start('calibration_lost_dialog_text.mp3', "button.swal2-confirm");
+                    Swal.disableButtons();
+                    audio_instructions.enable_buttons("button.swal2-confirm", 'calibration_lost_dialog_text.mp3');
+                },
                 allowOutsideClick: false,
                 allowEscapeKey: false,
                 allowEnterKey: false,
                 showCancelButton: false,
-                confirmButtonText: _("ok_button_label"),
+                confirmButtonText: '<img src="' + utilities.getStimuliURL("next.png") + '"/>',
             }).then(() => {
                 let trial_data = {
                     "start_time": utilities.round(startTime, 3),
@@ -439,11 +448,9 @@ jsPsych.plugins['eye-tracking'] = (function () {
         // is centered after the trial
         function showCenterDot() {
             var additional_style = ""
-            if(trial.custom_calibration_target !== null) {
-                additional_style = `background-image: url('${trial.custom_calibration_target}') repeat center; border: none;`
-            }
-            // Update the display element
-            display_element.innerHTML = `<div id="calibration-point" style="background-color: yellow; left:50%; top:50%; ${additional_style}"></div>`;
+
+            // Update the display element`
+            display_element.innerHTML = `<div id="calibration-point" style="background-color: #28a745; border-radius: 1vh;-webkit-border-radius: 1vh; -moz-border-radius: 1vh; left:50%; top:50%; padding-top: 3px;"><img src="` + utilities.getStimuliURL("next.png") + `"/></div>`;
 
             // When the calibration point is clicked, end the trial
             $("#calibration-point").click(endTrial);
@@ -470,6 +477,8 @@ jsPsych.plugins['eye-tracking'] = (function () {
             // gather the data to store for the trial
             let data = {
                 "start_time": utilities.round(startTime, 3),
+                "pictures_shown_time": picturesShownTime,
+                "audio_start_time": audioStartTime,
                 "audio": utilities.getStimuliName(trial.trial_data.audio),
                 "responses": participantResponses
             };

@@ -101,14 +101,18 @@ jsPsych.plugins["webgazer-calibrate"] = (function () {
 
             // Show a popup message and wait for the "OK" button click
             Swal.fire({
-                title: _("calibration_lost_dialog_title"),
-                html: _("calibration_lost_dialog_text"),
+                html: audio_instructions.instructions_button('calibration_lost_dialog_text.mp3', true, "button.swal2-confirm", true),
                 width: 600,
+                onOpen: () => {
+                    audio_instructions.start('calibration_lost_dialog_text.mp3', "button.swal2-confirm");
+                    Swal.disableButtons();
+                    audio_instructions.enable_buttons("button.swal2-confirm", 'calibration_lost_dialog_text.mp3');
+                },
                 allowOutsideClick: false,
                 allowEscapeKey: false,
                 allowEnterKey: false,
                 showCancelButton: false,
-                confirmButtonText: _("ok_button_label"),
+                confirmButtonText: '<img src="' + utilities.getStimuliURL("next.png") + '"/>',
             }).then(() => {
                 jsPsych.finishTrial({
                     "calibration_lost": true
@@ -195,7 +199,7 @@ jsPsych.plugins["webgazer-calibrate"] = (function () {
 
         // function to end trial when it is time
         function end_trial() {
-            jsPsych.extensions['webgazer'].pause();
+            //jsPsych.extensions['webgazer'].pause();
             jsPsych.extensions['webgazer'].hidePredictions();
             jsPsych.extensions['webgazer'].hideVideo();
 

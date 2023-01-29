@@ -47,7 +47,8 @@ jsPsych.plugins.fullscreen = (function() {
       endTrial();
     } else {
       if(trial.fullscreen_mode){
-        display_element.innerHTML = _("fullscreen_text") + '<button id="jspsych-fullscreen-btn" class="jspsych-btn">'+trial.button_label+'</button>';
+        let html = '<div style="padding-top: 300px;">' + audio_instructions.instructions_button('fullscreen_text.mp3', true, "#jspsych-fullscreen-btn") + '<button id="jspsych-fullscreen-btn" class="jspsych-btn call-to-action" disabled><img src="' + utilities.getStimuliURL("next.png") + '"/></button></div>';
+        utilities.setInnerHTML(display_element, html)
         var listener = display_element.querySelector('#jspsych-fullscreen-btn').addEventListener('click', function() {
           var element = document.documentElement;
           if (element.requestFullscreen) {

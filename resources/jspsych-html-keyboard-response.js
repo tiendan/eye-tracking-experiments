@@ -68,7 +68,7 @@ jsPsych.plugins["html-keyboard-response"] = (function() {
     }
 
     // draw
-    display_element.innerHTML = new_html;
+    utilities.setInnerHTML(display_element, new_html);
 
     // store response
     var response = {

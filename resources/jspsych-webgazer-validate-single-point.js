@@ -98,8 +98,9 @@ jsPsych.plugins["webgazer-validate-single-point"] = (function () {
                     requestAnimationFrame(watch_dot);
                 } else {
                     cancelGazeUpdate();
-
-                    validation_done();
+                    if(window.is_calibrated) {
+                         validation_done();
+                    }
                 }
             });
 
@@ -117,14 +118,18 @@ jsPsych.plugins["webgazer-validate-single-point"] = (function () {
 
             // Show a popup message and wait for the "OK" button click
             Swal.fire({
-                title: _("calibration_lost_dialog_title"),
-                html: _("calibration_lost_dialog_text"),
+                html: audio_instructions.instructions_button('calibration_lost_dialog_text.mp3', true, "button.swal2-confirm", true),
                 width: 600,
+                onOpen: () => {
+                    audio_instructions.start('calibration_lost_dialog_text.mp3', "button.swal2-confirm");
+                    Swal.disableButtons();
+                    audio_instructions.enable_buttons("button.swal2-confirm", 'calibration_lost_dialog_text.mp3');
+                },
                 allowOutsideClick: false,
                 allowEscapeKey: false,
                 allowEnterKey: false,
                 showCancelButton: false,
-                confirmButtonText: _("ok_button_label"),
+                confirmButtonText: '<img src="' + utilities.getStimuliURL("next.png") + '"/>',
             }).then(() => {
                 jsPsych.finishTrial({
                     "calibration_lost": true
@@ -208,28 +213,35 @@ jsPsych.plugins["webgazer-validate-single-point"] = (function () {
                 window.is_calibrated = false;
                 if (window.calibration_validation_repetitions >= trial.maximum_tries) {
                     Swal.fire({
-                        title: _("calibration_max_retries_reached_title"),
-                        text: _("calibration_max_retries_reached_text").replace("{}", trial.maximum_tries),
+                        html: audio_instructions.instructions_button('calibration_max_retries_reached_text.mp3', true, "button.swal2-confirm"),
                         width: 600,
+                        onOpen: () => {
+                            audio_instructions.start('calibration_max_retries_reached_text.mp3', "button.swal2-confirm");
+                            Swal.disableButtons();
+                        },
                         allowOutsideClick: false,
                         allowEscapeKey: false,
                         allowEnterKey: false,
                         showCancelButton: false,
-                        confirmButtonText: _("ok_button_label"),
+                        confirmButtonText: '<img src="' + utilities.getStimuliURL("next.png") + '"/>',
                     }).then(() => {
                         jsPsych.endExperiment(_("calibration_max_retries_reached_text").replace("{}", trial.maximum_tries));
                     });
                 }
                 else {
                     Swal.fire({
-                        title: _("calibration_not_validated_title"),
-                        text: _("calibration_not_validated_text"),
+                        html: audio_instructions.instructions_button("calibration_not_validated_text.mp3", true, "button.swal2-confirm", true),
                         width: 600,
+                        onOpen: () => {
+                            audio_instructions.start('calibration_not_validated_text.mp3', "button.swal2-confirm");
+                            Swal.disableButtons();
+                            audio_instructions.enable_buttons("button.swal2-confirm", 'calibration_not_validated_text.mp3');
+                        },
                         allowOutsideClick: false,
                         allowEscapeKey: false,
                         allowEnterKey: false,
                         showCancelButton: false,
-                        confirmButtonText: _("ok_button_label"),
+                        confirmButtonText: '<img src="' + utilities.getStimuliURL("next.png") + '"/>',
                     }).then(() => {
                         jsPsych.finishTrial();
                     });

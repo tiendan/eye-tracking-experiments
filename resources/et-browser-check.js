@@ -77,11 +77,13 @@ jsPsych.plugins['browser-check'] = (function () {
             if (options === undefined) options = {};
             if (options.title === undefined) options.title = "";
             if (options.text === undefined) options.text = null;
+            if (options.html === undefined) options.html = null;
             if (options.confirm === undefined) options.confirm = "OK";
             if (options.cancel === undefined) options.cancel = false;
 
             return Swal.fire({
                 title: options.title,
+                html: options.html,
                 text: options.text,
                 width: 600,
                 allowOutsideClick: false,
@@ -100,22 +102,26 @@ jsPsych.plugins['browser-check'] = (function () {
 
         function incompatibleBrowser () {
             dialog({
-                title: _("browser_incompatible_dialog_title"),
-                text: _("browser_incompatible_dialog_text"),
-                confirm: _("ok_button_label")
+                html: audio_instructions.instructions_button('browser_incompatible_dialog_text.mp3', true, ".swal2-confirm"),
+                confirm: '<img src="' + utilities.getStimuliURL("next.png") + '"/>',
             }).then((result) => {
                 jsPsych.endExperiment(_("browser_incompatible_dialog_title"));
             });
+            
+            // Disable the confirm button
+            $(".swal2-confirm").prop('disabled', true);
         }
 
         function noWebcam() {
             dialog({
-                title: _("no_webcam_dialog_title"),
-                text: _("no_webcam_dialog_text"),
-                confirm: _("ok_button_label")
+                html: audio_instructions.instructions_button('no_webcam_dialog_text.mp3', true, ".swal2-confirm"),
+                confirm: '<img src="' + utilities.getStimuliURL("next.png") + '"/>',
             }).then((result) => {
                 jsPsych.endExperiment(_("no_webcam_dialog_title"));
             });
+            
+            // Disable the confirm button
+            $(".swal2-confirm").prop('disabled', true);
         }
 
         let webgl_ctx;
@@ -145,13 +151,15 @@ jsPsych.plugins['browser-check'] = (function () {
 
         jsPsych.pluginAPI.setTimeout(function () {
             dialog({
-                title: _("webcam_check_dialog_title"),
-                text: _("webcam_check_dialog_text"),
-                confirm: _("ok_button_label")
+                html: audio_instructions.instructions_button("webcam_check_dialog_text.mp3", false, ".swal2-confirm"),
+                confirm: '<img src="' + utilities.getStimuliURL("next.png") + '"/>',
             }).then((result) => {
                 // Do nothing
                 ;
             });
+            
+            // Disable the confirm button
+            $(".swal2-confirm").prop('disabled', true);
         }, 500);
 
         navigator.getMedia({video: true}, function () {
@@ -160,9 +168,9 @@ jsPsych.plugins['browser-check'] = (function () {
 
             dialog({
                 title: _("sound_check_dialog_title"),
-                text: _("sound_check_dialog_text"),
-                cancel: _("no_button_label"),
-                confirm: _("yes_button_label")
+                html: _("sound_check_dialog_text"),
+                cancel: '<img src="' + utilities.getStimuliURL("cross.png") + '"/>',
+                confirm: '<img src="' + utilities.getStimuliURL("next.png") + '"/>',
             }).then((result) => {
                 // Stop the test sound
                 stopAudio();

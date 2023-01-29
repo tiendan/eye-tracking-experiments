@@ -87,6 +87,7 @@
         }
     }
 
+
     if (!jsPsych.extensions.webgazer.isInitialized()) {
       jsPsych.extensions.webgazer.start().then(function () {
         showTrial();
@@ -99,7 +100,6 @@
     }
 
     function showTrial() {
-
       load_time = Math.round(performance.now() - start_time);
 
       var style = `
@@ -121,14 +121,31 @@
       var wg_container = display_element.querySelector('#webgazer-init-container');
 
 
-      wg_container.innerHTML = `
+      html = `
         <div style='position: absolute; top: max(260px, 40%); left: calc(50% - 400px); width:800px;'>
         ${trial.instructions}
-        <button id='jspsych-wg-cont' class='jspsych-btn' disabled>${trial.button_text}</button>
+        <button id='jspsych-wg-cont' class='jspsych-btn call-to-action' disabled><img src='` + utilities.getStimuliURL("next.png") + `'/></button>
+        <input id="fakeinput" type="hidden" disabled>
         </div>`
 
+      utilities.setInnerHTML(wg_container, html)
+
+      // Observe fakeinput attribute changes
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type == "attributes") {
+            window.init_camera_instructions_listened = true;
+          }
+        });
+      });
+
+      observer.observe(document.querySelector('#fakeinput'), {
+        attributes: true
+      });
+
       if(is_face_detect_green()){
-        document.querySelector('#jspsych-wg-cont').disabled = false;
+        window.face_inside_rectangle = true;
+        enable_disable_continue_button();
       } else {
         var observer = new MutationObserver(face_detect_event_observer);
         observer.observe(document, {
@@ -157,19 +174,27 @@
     function face_detect_event_observer(mutationsList, observer) {
       if (mutationsList[0].target == document.querySelector('#webgazerFaceFeedbackBox')) {
         if (mutationsList[0].type == 'attributes' && mutationsList[0].target.style.borderColor == "green") {
-          document.querySelector('#jspsych-wg-cont').disabled = false;
+            window.face_inside_rectangle = true;
         }
         if (mutationsList[0].type == 'attributes' && mutationsList[0].target.style.borderColor == "red") {
-          document.querySelector('#jspsych-wg-cont').disabled = true;
+            window.face_inside_rectangle = false;
         }
+        enable_disable_continue_button();
       }
+    }
+
+    function enable_disable_continue_button() {
+      let disabled = true;
+      if(typeof window.face_inside_rectangle != 'undefined' && window.face_inside_rectangle && typeof init_camera_instructions_listened != 'undefined') {
+        disabled = false;
+      }
+      document.querySelector('#jspsych-wg-cont').disabled = disabled;
     }
 
     // function to end trial when it is time
     function end_trial() {
-      jsPsych.extensions['webgazer'].pause();
+      //jsPsych.extensions['webgazer'].pause();
       jsPsych.extensions['webgazer'].hideVideo();
-
 
       // kill any remaining setTimeout handlers
       jsPsych.pluginAPI.clearAllTimeouts();

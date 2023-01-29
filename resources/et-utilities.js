@@ -61,7 +61,7 @@ window.utilities = (function () {
     let getHeadPositioningTrial = function (options) {
         return {
             type: "webgazer-init-camera",
-            instructions: _("init_camera_instructions"),
+            instructions: audio_instructions.instructions_button('init_camera_instructions.mp3', true, "#fakeinput", true),
             button_text: _("continue_button_label"),
             recalibrate_after_n_seconds: getOption(options, 'recalibrate_after_n_seconds'),
             recalibrate_after_n_trials: getOption(options, 'recalibrate_after_n_trials'),
@@ -89,8 +89,8 @@ window.utilities = (function () {
     let getValidationInstructionTrial = function (options) {
         return {
             type: 'html-button-response',
-            stimulus: _("validation_instructions"),
-            choices: [_("start_validation_button_label")],
+            stimulus: audio_instructions.instructions_button('validation_instructions.mp3', true, ".jspsych-html-button-response-button>.jspsych-btn", true),
+            choices: ['<img src="' + utilities.getStimuliURL("next.png") + '"/>'],
             skip_if_calibration_validated: true,
         }
     }
@@ -146,10 +146,10 @@ window.utilities = (function () {
         // Split data into lines
         let lines = data.split(/\r\n|\n/);
         // Get data headings
-        let headings = lines[0].toLowerCase().split(',');
+        let headings = lines[0].toLowerCase().split('\t');
 
         for (let i = 1; i < lines.length; i++) {
-            let linePieces = lines[i].toLowerCase().split(',');
+            let linePieces = lines[i].toLowerCase().split('\t');
             if (linePieces.length !== headings.length)
                 break;
             let line_data = {};
@@ -360,6 +360,17 @@ window.utilities = (function () {
                 return !window.is_calibrated;
             }
         }];
+    }
+
+    module.setInnerHTML = function(elm, html) {
+        elm.innerHTML = html;
+        Array.from(elm.querySelectorAll("script")).forEach( oldScript => {
+            const newScript = document.createElement("script");
+            Array.from(oldScript.attributes)
+              .forEach( attr => newScript.setAttribute(attr.name, attr.value) );
+            newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+            oldScript.parentNode.replaceChild(newScript, oldScript);
+        });
     }
 
     return module;
